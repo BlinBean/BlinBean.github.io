@@ -12,28 +12,16 @@
 <h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><h2 id="测试2"><a href="#测试2" class="headerlink" title="测试2"></a>测试2</h2><h2 id="内容-1"><a href="#内容-1" class="headerlink" title="内容"></a>内容</h2><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2>]]></content>
   </entry>
   <entry>
-    <title>unity之打包</title>
-    <url>/2021/04/16/unity%E4%B9%8B%E6%89%93%E5%8C%85/</url>
-    <content><![CDATA[<h2 id="1-相关设置"><a href="#1-相关设置" class="headerlink" title="1.相关设置"></a>1.相关设置</h2><p>首先在unity的项目设置中将packge Name设置为相对应的包名</p>
-]]></content>
-      <categories>
-        <category>unity客户端</category>
-      </categories>
-      <tags>
-        <tag>unity</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>openGL基础</title>
-    <url>/2021/04/17/openGL%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[<h1 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h1><h1 id="贴图"><a href="#贴图" class="headerlink" title="贴图"></a>贴图</h1><h2 id="主要逻辑"><a href="#主要逻辑" class="headerlink" title="主要逻辑"></a>主要逻辑</h2><h3 id="创建纹理对象"><a href="#创建纹理对象" class="headerlink" title="创建纹理对象"></a>创建纹理对象</h3><p>void glGenTextures(GLsizei n,GLuint * textures);</p>
+    <title>openGL基础之贴图</title>
+    <url>/2021/04/17/openGL%E5%9F%BA%E7%A1%80%E4%B9%8B%E8%B4%B4%E5%9B%BE/</url>
+    <content><![CDATA[<h1 id="主要逻辑"><a href="#主要逻辑" class="headerlink" title="主要逻辑"></a>主要逻辑</h1><h2 id="读取图片到内存中的某处"><a href="#读取图片到内存中的某处" class="headerlink" title="读取图片到内存中的某处"></a>读取图片到内存中的某处</h2><h2 id="创建纹理对象"><a href="#创建纹理对象" class="headerlink" title="创建纹理对象"></a>创建纹理对象</h2><p>void glGenTextures(GLsizei n,GLuint * textures);</p>
 <p>根据传进来的参数生成对应数量的纹理id并且存储在textures中。</p>
 <p>n代表的是生成的纹理个数，textures是用来存储纹理的数组。</p>
-<h3 id="绑定纹理目标"><a href="#绑定纹理目标" class="headerlink" title="绑定纹理目标"></a>绑定纹理目标</h3><p>void glBindTexture(GLenum target, GLuint texture );</p>
+<h2 id="绑定纹理目标"><a href="#绑定纹理目标" class="headerlink" title="绑定纹理目标"></a>绑定纹理目标</h2><p>void glBindTexture(GLenum target, GLuint texture );</p>
 <p>target代表纹理目标，texture代表纹理id。</p>
 <p>这个函数也就是将纹理id绑定到指定的纹理目标上。</p>
 <p>个人的理解将纹理设置为指定的类型。之后这个类型要用其他纹理的话需要进行替换。可以理解为纹理目标相当于一个变量，这个函数只是为这个变量赋值。</p>
-<h4 id="纹理目标-纹理类型"><a href="#纹理目标-纹理类型" class="headerlink" title="纹理目标(纹理类型)"></a>纹理目标(纹理类型)</h4><p>GL_TEXTURE_1D</p>
+<h3 id="纹理目标-纹理类型"><a href="#纹理目标-纹理类型" class="headerlink" title="纹理目标(纹理类型)"></a>纹理目标(纹理类型)</h3><p>GL_TEXTURE_1D</p>
 <p>GL_TEXTURE_2D</p>
 <p>GL_TEXTURE_3D</p>
 <p>GL_TEXTURE_1D_ARRAY</p>
@@ -44,17 +32,42 @@
 <p>GL_TEXTURE_BUFFER</p>
 <p>GL_TEXTURE_2D_MULTISAMPLE</p>
 <p>GL_TEXTURE_2D_MULTISAMPLE_ARRAY</p>
-<h3 id="分配内存空间"><a href="#分配内存空间" class="headerlink" title="分配内存空间"></a>分配内存空间</h3><p>void glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 800, 600, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);</p>
-<h3 id="设置图片格式"><a href="#设置图片格式" class="headerlink" title="设置图片格式"></a>设置图片格式</h3><h3 id="绑定到帧对象"><a href="#绑定到帧对象" class="headerlink" title="绑定到帧对象"></a>绑定到帧对象</h3><p>相关链接: <a href="https://learnopengl.com/Advanced-OpenGL/Framebuffers">https://learnopengl.com/Advanced-OpenGL/Framebuffers</a></p>
+<h2 id="分配内存空间"><a href="#分配内存空间" class="headerlink" title="分配内存空间"></a>分配内存空间</h2><p>void glTexImage2D(GLenum target,<br>     GLint level,<br>     GLint internalformat,<br>     GLsizei width,<br>     GLsizei height,<br>     GLint border,<br>     GLenum format,<br>     GLenum type,<br>     const void * data);</p>
+<h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><p>target:纹理目标。</p>
+<p>level:mipmap的层级。</p>
+<p>internalformat:纹理数据在openGL中是如何表示(存储)的,例如GL_RGB。</p>
+<p>border:边框的宽度,必须为0。</p>
+<p>format:载入纹理的格式。尽量与internalformat一致，否者不同格式需要进行转化(也就是说速度更慢)。</p>
+<p>type: 纹理的数据类型。</p>
+<p>data: 指向内存中图像数据的指针，其实就是指向色彩数组(图片数据？)的指针。</p>
+<h3 id="type类型"><a href="#type类型" class="headerlink" title="type类型"></a>type类型</h3><p>GL_(UNSIGNED_)BYTE: 1 byte<br>GL_(UNSIGNED_)SHORT: 2 bytes<br>GL_(UNSIGNED_)INT: 4 bytes<br>GL_HALF_FLOAT: 2 bytes<br>GL_FLOAT: 4 bytes</p>
+<h3 id="tips"><a href="#tips" class="headerlink" title="tips"></a>tips</h3><p>openGL中颜色的每个通道存储在一个长度为8的数组中。</p>
+<p>颜色可以使用一个图片长x宽x3或者长x宽x4的数组来存储。</p>
+<h2 id="设置图片格式-纹理过滤"><a href="#设置图片格式-纹理过滤" class="headerlink" title="设置图片格式(纹理过滤)"></a>设置图片格式(纹理过滤)</h2><p>void glTexParameteri(GLenum target, GLenum pname, GLint param)</p>
+<p>pname指定过滤的模式。</p>
+<p>param用来对应模式的设置。</p>
+<p>这个函数需要调用4次来对应每个模式的设置。</p>
+<h3 id="pname"><a href="#pname" class="headerlink" title="pname"></a>pname</h3><p>GL_TEXTURE_WRAP_S  :S方向上的贴图模式</p>
+<p>GL_TEXTURE_WRAP_T  :T方向上的贴图模式</p>
+<p>GL_TEXTURE_MAG_FILTER : 放大过滤</p>
+<p>GL_TEXTURE_MIN_FILTER  :缩小过滤</p>
+<h3 id="param"><a href="#param" class="headerlink" title="param"></a>param</h3><p>GL_CLAMP    :将纹理坐标限制在0.0,1.0的范围之内.如果超出了会如何呢.不会错误,只是会边缘拉伸填充</p>
+<p>GL_REPEAT：纹理超出0~1的部分将会进行重复。</p>
+<p>GL_CLAMP_TO_EDGE    :在这种模式下，边框始终被忽略。位于纹理边缘或者靠近纹理边缘的纹理单元将用于纹理计算，但不使用纹理边框上的纹理单元，由于硬件支持原因，多数情况下GL_CLAMP与GL_CLAMP_TO_EDGE效果相同</p>
+<p>GL_CLAMP_TO_BORDER    :如果纹理坐标位于范围[0,1]之外，那么只用边框纹理单元（如果没有边框，则使用常量边框颜色，我想常量边框颜色就是黑色）</p>
+<p>GL_LINEAR    :线性过滤, 使用距离当前渲染像素中心最近的4个纹素加权平均值，速度较慢无锯齿</p>
+<p>GL_NEAREST    :使用纹理中坐标最接近的一个像素的颜色作为需要绘制的像素颜色，速度较快会出现锯齿</p>
+<p>GL_LINEAR_MIPMAP_NEAREST    :使用GL_NEAREST对最接近当前多边形的解析度的两个层级贴图进行采样,然后用这两个值进行线性插值</p>
+<h3 id="个人习惯"><a href="#个人习惯" class="headerlink" title="个人习惯"></a>个人习惯</h3><p>GL_TEXTURE_WRAP_S和GL_TEXTURE_WRAP_T常用 GL_REPEAT。</p>
+<p>GL_TEXTURE_MAG_FILTER和GL_TEXTURE_MIN_FILTER常用GL_NEAREST和GL_LINEAR。</p>
+<h2 id="绑定到帧对象"><a href="#绑定到帧对象" class="headerlink" title="绑定到帧对象"></a>绑定到帧对象</h2><p>void glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0)</p>
+<h1 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h1><p><a href="https://learnopengl.com/Advanced-OpenGL/Framebuffers">https://learnopengl.com/Advanced-OpenGL/Framebuffers</a></p>
+<p><a href="https://blog.csdn.net/jeffasd/article/details/78135588">https://blog.csdn.net/jeffasd/article/details/78135588</a></p>
+<p><a href="http://blog.sina.com.cn/s/blog_9f4bc8e301014gza.html">http://blog.sina.com.cn/s/blog_9f4bc8e301014gza.html</a></p>
 ]]></content>
       <tags>
         <tag>openGL</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>unity之热更</title>
-    <url>/2021/04/16/unity%E4%B9%8B%E7%83%AD%E6%9B%B4/</url>
-    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>unity渲染管线</title>
@@ -69,13 +82,30 @@
       </tags>
   </entry>
   <entry>
-    <title>图形学入门指北</title>
-    <url>/2021/04/15/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%85%A5%E9%97%A8%E6%8C%87%E5%8C%97/</url>
+    <title>unity之打包</title>
+    <url>/2021/04/16/unity%E4%B9%8B%E6%89%93%E5%8C%85/</url>
+    <content><![CDATA[<h2 id="1-相关设置"><a href="#1-相关设置" class="headerlink" title="1.相关设置"></a>1.相关设置</h2><p>首先在unity的项目设置中将packge Name设置为相对应的包名</p>
+]]></content>
+      <categories>
+        <category>unity客户端</category>
+      </categories>
+      <tags>
+        <tag>unity</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>unity之热更</title>
+    <url>/2021/04/16/unity%E4%B9%8B%E7%83%AD%E6%9B%B4/</url>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>八叉树检测</title>
     <url>/2021/04/17/%E5%85%AB%E5%8F%89%E6%A0%91%E6%A3%80%E6%B5%8B/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>图形学入门指北</title>
+    <url>/2021/04/15/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%85%A5%E9%97%A8%E6%8C%87%E5%8C%97/</url>
     <content><![CDATA[]]></content>
   </entry>
 </search>
