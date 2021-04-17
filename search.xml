@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>hexo测试文章</title>
-    <url>/2021/04/11/hexo%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/</url>
-    <content><![CDATA[<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><h2 id="测试2"><a href="#测试2" class="headerlink" title="测试2"></a>测试2</h2><h2 id="内容-1"><a href="#内容-1" class="headerlink" title="内容"></a>内容</h2><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2>]]></content>
-  </entry>
-  <entry>
-    <title>hexo配置</title>
-    <url>/2021/04/12/hexo%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<hr>
-<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><h2 id="测试2"><a href="#测试2" class="headerlink" title="测试2"></a>测试2</h2><h2 id="内容-1"><a href="#内容-1" class="headerlink" title="内容"></a>内容</h2><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2>]]></content>
-  </entry>
-  <entry>
     <title>openGL基础之贴图</title>
     <url>/2021/04/17/openGL%E5%9F%BA%E7%A1%80%E4%B9%8B%E8%B4%B4%E5%9B%BE/</url>
     <content><![CDATA[<h1 id="主要逻辑"><a href="#主要逻辑" class="headerlink" title="主要逻辑"></a>主要逻辑</h1><h2 id="读取图片到内存中的某处"><a href="#读取图片到内存中的某处" class="headerlink" title="读取图片到内存中的某处"></a>读取图片到内存中的某处</h2><h2 id="创建纹理对象"><a href="#创建纹理对象" class="headerlink" title="创建纹理对象"></a>创建纹理对象</h2><p>void glGenTextures(GLsizei n,GLuint * textures);</p>
@@ -60,25 +49,34 @@
 <p>GL_LINEAR_MIPMAP_NEAREST    :使用GL_NEAREST对最接近当前多边形的解析度的两个层级贴图进行采样,然后用这两个值进行线性插值</p>
 <h3 id="个人习惯"><a href="#个人习惯" class="headerlink" title="个人习惯"></a>个人习惯</h3><p>GL_TEXTURE_WRAP_S和GL_TEXTURE_WRAP_T常用 GL_REPEAT。</p>
 <p>GL_TEXTURE_MAG_FILTER和GL_TEXTURE_MIN_FILTER常用GL_NEAREST和GL_LINEAR。</p>
-<h2 id="绑定到帧对象"><a href="#绑定到帧对象" class="headerlink" title="绑定到帧对象"></a>绑定到帧对象</h2><p>void glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0)</p>
+<h2 id="绑定到帧对象（帧缓冲）"><a href="#绑定到帧对象（帧缓冲）" class="headerlink" title="绑定到帧对象（帧缓冲）"></a>绑定到帧对象（帧缓冲）</h2><p>void glFramebufferTexture2D(GLenum target,<br>    GLenum attachment,<br>    GLenum textarget,<br>    GLuint texture,<br>    GLint level)</p>
+<p>将纹理对象与帧缓冲绑定。</p>
+<h3 id="参数-1"><a href="#参数-1" class="headerlink" title="参数"></a>参数</h3><p>target:与之前的不一致，这里指的是帧缓冲目标，通常选择GL_FRAMEBUFFER(另外GL_DRAW_FRAMEBUFFER, GL_READ_FRAMEBUFFER这俩对应着读写)。</p>
+<p>attachment:指定纹理对象在帧缓冲区中的挂载点。其实就是纹理值存储在哪个缓冲区内。</p>
+<p>textarget:指定纹理目标，与之前的类型也不大一致。</p>
+<p>texture:指定的纹理对象,也就是纹理id。</p>
+<p>level:mipmap层级</p>
+<h3 id="attachment"><a href="#attachment" class="headerlink" title="attachment"></a>attachment</h3><p>GL_COLOR_ATTACHMENTi : 颜色挂载点，可以有多个颜色挂载点，i的范围为0~GL_MAX_COLOR_ATTACHMENTS-1</p>
+<p>GL_DEPTH_ATTACHMENT : 深度挂载点</p>
+<p>GL_STENCIL_ATTACHMENT : 模板挂载点</p>
+<p>GL_DEPTH_STENCIL_ATTACHMENT : 同时挂载到深度和模板挂载点。</p>
+<h3 id="textarget"><a href="#textarget" class="headerlink" title="textarget"></a>textarget</h3><p>GL_TEXTURE_2D : glBindTexture绑定GL_TEXTURE_2D的情况下</p>
+<p>GL_TEXTURE_RECTANGLE, </p>
+<p>GL_TEXTURE_CUBE_MAP_POSITIVE_X : 带cube的表示使用立方体纹理的哪一个面，glBindTexture绑定GL_TEXTURE_CUBE的情况下。</p>
+<p>GL_TEXTURE_CUBE_MAP_POSITIVE_Y</p>
+<p>GL_TEXTURE_CUBE_MAP_POSITIVE_Z</p>
+<p>GL_TEXTURE_CUBE_MAP_NEGATIVE_X,</p>
+<p>GL_TEXTURE_CUBE_MAP_NEGATIVE_Y,</p>
+<p>GL_TEXTURE_CUBE_MAP_NEGATIVE_Z,</p>
+<p>or GL_TEXTURE_2D_MULTISAMPLE : glBindTexture绑定 GL_TEXTURE_2D_MULTISAMPLE的情况下。</p>
+<h3 id="tips-1"><a href="#tips-1" class="headerlink" title="tips"></a>tips</h3><p>这个在最后搞的。</p>
 <h1 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h1><p><a href="https://learnopengl.com/Advanced-OpenGL/Framebuffers">https://learnopengl.com/Advanced-OpenGL/Framebuffers</a></p>
 <p><a href="https://blog.csdn.net/jeffasd/article/details/78135588">https://blog.csdn.net/jeffasd/article/details/78135588</a></p>
 <p><a href="http://blog.sina.com.cn/s/blog_9f4bc8e301014gza.html">http://blog.sina.com.cn/s/blog_9f4bc8e301014gza.html</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/166106035">https://zhuanlan.zhihu.com/p/166106035</a></p>
 ]]></content>
       <tags>
         <tag>openGL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>unity渲染管线</title>
-    <url>/2021/04/12/unity%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF/</url>
-    <content><![CDATA[<hr>
-<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><h2 id="测试2"><a href="#测试2" class="headerlink" title="测试2"></a>测试2</h2><h2 id="内容-1"><a href="#内容-1" class="headerlink" title="内容"></a>内容</h2><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2>]]></content>
-      <categories>
-        <category>渲染</category>
-      </categories>
-      <tags>
-        <tag>unity</tag>
       </tags>
   </entry>
   <entry>
@@ -97,6 +95,18 @@
     <title>unity之热更</title>
     <url>/2021/04/16/unity%E4%B9%8B%E7%83%AD%E6%9B%B4/</url>
     <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>unity渲染管线</title>
+    <url>/2021/04/12/unity%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF/</url>
+    <content><![CDATA[<hr>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><h2 id="测试2"><a href="#测试2" class="headerlink" title="测试2"></a>测试2</h2><h2 id="内容-1"><a href="#内容-1" class="headerlink" title="内容"></a>内容</h2><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2>]]></content>
+      <categories>
+        <category>渲染</category>
+      </categories>
+      <tags>
+        <tag>unity</tag>
+      </tags>
   </entry>
   <entry>
     <title>八叉树检测</title>
